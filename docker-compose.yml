@@ -1,0 +1,74 @@
+version: "3"
+  
+services:
+  ipgeo-cache:
+    image: redis:latest
+    container_name: ipgeo-cache-redis
+    networks:
+      - ipgeo-grid
+
+  ipgeo-api:
+    image: vyshnavlal/ipgeo-apiservice:v1
+    container_name: ipgeo-api
+    environment:
+      - REDIS_HOST=ipgeo-cache
+      - APP_PORT=8080
+      - API_KEY=a6c79e3598804a60b534e396ff911987
+    ports:
+      - "8080:8080" 
+    networks:
+      - ipgeo-grid
+  
+  ipgeo-frontend1:
+    image: vyshnavlal/ipgeo-frontend:v1
+    container_name: ipgeo-frontend1
+    environment:
+      - API_SERVER=ipgeo-api
+      - API_SERVER_PORT=8080
+      - API_PATH=/api/v1/
+      - APP_PORT=8080
+    ports:
+      - "8081:8080"
+    networks:
+      - ipgeo-grid
+  
+  ipgeo-frontend2:
+    image: vyshnavlal/ipgeo-frontend:v1
+    container_name: ipgeo-frontend2
+    environment:
+      - API_SERVER=ipgeo-api
+      - API_SERVER_PORT=8080
+      - API_PATH=/api/v1/
+      - APP_PORT=8080
+    ports:
+      - "8082:8080"
+    networks:
+      - ipgeo-grid
+  ipgeo-frontend3:
+    image: vyshnavlal/ipgeo-frontend:v1
+    container_name: ipgeo-frontend3
+    environment:
+      - API_SERVER=ipgeo-api
+      - API_SERVER_PORT=8080
+      - API_PATH=/api/v1/
+      - APP_PORT=8080
+    ports:
+      - "8083:8080"
+    networks:
+      - ipgeo-grid
+
+
+  reverseproxy:
+    build: .
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/logs/:/var/log/nginx/
+    networks:
+      - ipgeo-grid
+
+  
+networks:
+  ipgeo-grid:
+
