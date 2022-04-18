@@ -139,9 +139,9 @@ The Flask app is used to build the images for ipgeo-api and ipgeo-frontend(1,2,3
 Nginx conf contains the upstream section and proxy pass section, see below:
 ```sh
 upstream ipgeo {
-        server ipgeo-frontend1:8080;
-        server ipgeo-frontend2:8080;
-        server ipgeo-frontend3:8080;
+        server ipgeo-frontend1:8081;
+        server ipgeo-frontend2:8082;
+        server ipgeo-frontend3:8083;
 }
 
 server {
