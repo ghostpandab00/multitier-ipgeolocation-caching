@@ -45,9 +45,9 @@ read domain
 echo "Building Nginx conf file..."
 cat <<EOF > /home/ec2-user/ipgeo-caching/nginx/nginx.conf
 upstream ipgeo {
-        server ipgeo-frontend1:8080;
-        server ipgeo-frontend2:8080;
-        server ipgeo-frontend3:8080;
+        server ipgeo-frontend1:8081;
+        server ipgeo-frontend2:8082;
+        server ipgeo-frontend3:8083;
 }
 
 server {
