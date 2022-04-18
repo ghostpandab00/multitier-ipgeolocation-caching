@@ -170,10 +170,14 @@ The image for the reverseproxy service is made from a nginx conf and a dockerfil
    
 ```sh
 FROM nginx:alpine
+
 RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx.conf /etc/nginx/conf.d/default-nginx.conf
-COPY site.crt /etc/ssl/certs/site.crt
-COPY site.key /etc/ssl/private/site.key
+
+COPY ./nginx/nginx.conf /etc/nginx/conf.d/default-nginx.conf
+
+COPY ./certs/site.crt /etc/ssl/certs/site.crt
+
+COPY ./certs/site.key /etc/ssl/certs/site.key
 ```
 The SSL certificate and private key needs to be placed at the project directory before running docker-compose up.
 
